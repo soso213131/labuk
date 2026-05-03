@@ -1,0 +1,18 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="APScheduler" />
+          <option value="greenlet" />
+          <option value="python-dotenv" />
+          <option value="SQLAlchemy" />
+          <option value="typing_extensions" />
+          <option value="tzdata" />
+          <option value="tzlocal" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

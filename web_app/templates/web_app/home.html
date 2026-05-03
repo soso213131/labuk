@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <p>{{ message }}</p>
+
+    <nav>
+        <ul>
+            {% for link in nav_links %}
+                <li><a href="{% url link.url_name %}">{{ link.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+</body>
+</html>
