@@ -1,25 +1,29 @@
 from django.shortcuts import render
+# Імпортуємо моделі, які ми створили для нашого магазину
+from .models import Category, Brand, Product
+
 
 def index(request):
-    # Контекст для головної сторінки
+    # Витягуємо всі товари та категорії з бази даних
+    products = Product.objects.all()
+    categories = Category.objects.all()
+
+    # Передаємо ці дані в шаблон через контекст
     context = {
-        'title': 'Головна сторінка',
-        'message': 'Вітаємо на нашому сайті!',
-        'nav_links': [
-            {'name': 'Перейти на другу сторінку', 'url_name': 'second_page'},
-        ]
+        'title': 'Головна сторінка - Магазин Рибалка',
+        'products': products,
+        'categories': categories,
     }
-    # Вказуємо 'web_app/home.html', бо твій файл називається саме так
     return render(request, 'web_app/home.html', context)
 
+
 def second(request):
-    # Контекст для другої сторінки
+    # Навіть на другій сторінці нам потрібні категорії для меню в хедері
+    categories = Category.objects.all()
+
     context = {
-        'title': 'Друга сторінка',
-        'message': 'Це додаткова сторінка нашого проекту.',
-        'nav_links': [
-            {'name': 'Повернутися на головну', 'url_name': 'home_page'},
-        ]
+        'title': 'Інформація',
+        'message': 'Тут ви знайдете додаткову інформацію про наше спорядження.',
+        'categories': categories,
     }
-    # Вказуємо 'web_app/second.html'
     return render(request, 'web_app/second.html', context)

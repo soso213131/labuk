@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Магазин Рибалка{% endblock %}</title>
+    <style>
+        /* Мінімальні стилі, щоб сайт не «розсипався» */
+        header, footer { background: #f4f4f4; padding: 20px; text-align: center; }
+        nav ul { list-style: none; padding: 0; display: flex; justify-content: center; gap: 20px; }
+        .product-card { border: 1px solid #ddd; padding: 10px; margin: 10px; display: inline-block; width: 200px; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🎣 Магазин «Рибалка»</h1>
+    <nav>
+        <ul>
+            <li><a href="{% url 'home_page' %}">Головна</a></li>
+            <!-- Тут ми пізніше виведемо категорії з бази -->
+            {% for cat in categories %}
+                <li><a href="#">{{ cat.name }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
+</header>
+
+<main style="padding: 20px;">
+    {% block content %}
+    <!-- Тут буде змінюватися контент кожної сторінки -->
+    {% endblock %}
+</main>
+
+<footer>
+    <p>&copy; 2026 Всі права захищені. Найкраще спорядження для вашого улову!</p>
+</footer>
+
+</body>
+</html>
