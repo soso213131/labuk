@@ -5,10 +5,9 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('web_app.urls')), # Твоя основна аплікуха
+    path('', include('web_app.urls')),
 ]
 
-# Це блок, який ти додаєш знизу.
-# Він каже Django: "Якщо ми в режимі розробки, показуй картинки з папки media"
+# Без цього блоку картинки НЕ будуть відображатися!
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

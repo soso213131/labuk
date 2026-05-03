@@ -1,25 +1,25 @@
 {% extends 'web_app/base.html' %}
 
-{% block title %} Категорія: {{ category.name }} {% endblock %}
-
 {% block content %}
     <h2>Товари у категорії: "{{ category.name }}"</h2>
 
-    <div class="product-list" style="display: flex; flex-wrap: wrap;">
-        {% for product in products %}
-            <div class="product-card" style="border: 1px solid #ccc; padding: 15px; margin: 10px; width: 250px; text-align: center;">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" style="width: 100%; height: 200px; object-fit: contain;">
-                {% endif %}
+    <div class="product-list" style="display: flex; flex-wrap: wrap; gap: 20px;">
+        {% for product in products %} <!-- ТУТ МИ ЙДЕМО ЦИКЛОМ ПО ВСІХ ТОВАРАХ -->
+            <div class="product-card" style="border: 1px solid #ddd; padding: 15px; width: 250px; text-align: center; border-radius: 10px;">
+                <div style="height: 180px; display: flex; align-items: center; justify-content: center; background: #f9f9f9;">
+                    {% if product.image %}
+                        <img src="{{ product.image.url }}" style="max-width: 100%; max-height: 100%;">
+                    {% else %}
+                        <span>Фото відсутнє</span>
+                    {% endif %}
+                </div>
                 <h3>{{ product.title }}</h3>
-                <p>Ціна: {{ product.price }} грн</p>
-                <a href="{{ product.get_absolute_url }}" style="text-decoration: none; color: blue; font-weight: bold;">Дивитися товар</a>
+                <p>Ціна: <strong>{{ product.price }} грн</strong></p>
+                <!-- ЦЕ ПОСИЛАННЯ ВЕДЕ НА СТОРІНКУ ОДНОГО ТОВАРУ -->
+                <a href="{{ product.get_absolute_url }}" style="color: blue;">Дивитися деталі</a>
             </div>
         {% empty %}
             <p>У цій категорії поки немає товарів.</p>
         {% endfor %}
     </div>
-
-    <br>
-    <a href="{% url 'home_page' %}">← На головну</a>
 {% endblock %}
