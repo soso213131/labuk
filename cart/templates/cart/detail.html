@@ -1,0 +1,42 @@
+{% extends 'web_app/base.html' %}
+
+{% block title %}Ваш кошик{% endblock %}
+
+{% block content %}
+    <h1>Ваш кошик 🛒</h1>
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+        <thead>
+            <tr style="background: #f4f4f4; text-align: left;">
+                <th style="padding: 10px; border-bottom: 2px solid #ddd;">Товар</th>
+                <th style="padding: 10px; border-bottom: 2px solid #ddd;">Кількість</th>
+                <th style="padding: 10px; border-bottom: 2px solid #ddd;">Ціна</th>
+                <th style="padding: 10px; border-bottom: 2px solid #ddd;">Сума</th>
+                <th style="padding: 10px; border-bottom: 2px solid #ddd;">Дія</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in cart %}
+                {% with product=item.product %}
+                    <tr>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ product.title }}</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ item.quantity }} шт.</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ item.price }} грн</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ item.total_price }} грн</td>
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">
+                            <a href="{% url 'cart:cart_remove' product.id %}" style="color: red; text-decoration: none;">Видалити</a>
+                        </td>
+                    </tr>
+                {% endwith %}
+            {% endfor %}
+            <tr style="font-weight: bold; font-size: 20px;">
+                <td colspan="3" style="padding: 20px 10px; text-align: right;">Разом до сплати:</td>
+                <td colspan="2" style="padding: 20px 10px;">{{ cart.get_total_price }} грн</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 30px; display: flex; gap: 20px;">
+        <a href="{% url 'home_page' %}" style="padding: 10px 20px; background: #95a5a6; color: white; text-decoration: none; border-radius: 5px;">Продовжити покупки</a>
+        <a href="#" style="padding: 10px 20px; background: #27ae60; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Оформити замовлення 🚀</a>
+    </div>
+{% endblock %}

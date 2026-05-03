@@ -66,3 +66,15 @@ def product_detail(request, pk):
         'product': product,
     }
     return render(request, 'web_app/product_detail.html', context)
+
+from cart.forms import CartAddProductForm # Додай імпорт
+
+def product_detail(request, pk):
+    categories = Category.objects.all()
+    product = get_object_or_404(Product, pk=pk)
+    cart_product_form = CartAddProductForm() # Створюємо форму
+    return render(request, 'web_app/product_detail.html', {
+        'product': product,
+        'categories': categories,
+        'cart_product_form': cart_product_form # Передаємо в шаблон
+    })
