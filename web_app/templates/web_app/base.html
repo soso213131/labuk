@@ -39,14 +39,20 @@
 </header>
 
 <nav>
-    <ul>
-        <li><a href="{% url 'home_page' %}">Головна</a></li>
+    <div style="display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: 0 auto;">
+        <ul>
+            <li><a href="{% url 'home_page' %}">Головна</a></li>
+            {% for cat in categories %}
+                <li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
+            {% endfor %}
+        </ul>
 
-        {% for cat in categories %}
-            <!-- Оновлене посилання: використовуємо метод get_absolute_url для переходу в категорію -->
-            <li><a href="{{ cat.get_absolute_url }}">{{ cat.name }}</a></li>
-        {% endfor %}
-    </ul>
+        <!-- НОВА ФОРМА ПОШУКУ -->
+        <form action="{% url 'home_page' %}" method="get" style="display: flex; gap: 5px;">
+            <input type="text" name="search" placeholder="Шукати снасті..." value="{{ request.GET.search }}" style="padding: 5px 10px; border-radius: 5px; border: 1px solid #ccc;">
+            <button type="submit" style="padding: 5px 15px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">🔍</button>
+        </form>
+    </div>
 </nav>
 
 <main>

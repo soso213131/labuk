@@ -4,6 +4,37 @@
 
 {% block content %}
     <h2>Наші товари</h2>
+
+    <!-- БЛОК СОРТУВАННЯ ТА ПОШУКУ (Лаба №7) -->
+    <div style="margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; background: #f8f9fa; padding: 15px; border-radius: 8px;">
+        <div>
+            <span style="font-weight: bold; margin-right: 10px;">Сортувати за:</span>
+
+            <!-- Посилання для сортування. Додаємо &search, щоб пошук не зникав -->
+            <a href="?sort=price_asc{% if search_query %}&search={{ search_query }}{% endif %}"
+               style="text-decoration: none; margin-right: 15px; color: {% if current_sort == 'price_asc' %}#3498db{% else %}#555{% endif %};">
+               📉 Найдешевші
+            </a>
+
+            <a href="?sort=price_desc{% if search_query %}&search={{ search_query }}{% endif %}"
+               style="text-decoration: none; margin-right: 15px; color: {% if current_sort == 'price_desc' %}#3498db{% else %}#555{% endif %};">
+               📈 Найдорожчі
+            </a>
+
+            <a href="?sort=name{% if search_query %}&search={{ search_query }}{% endif %}"
+               style="text-decoration: none; color: {% if current_sort == 'name' %}#3498db{% else %}#555{% endif %};">
+               🔤 А-Я
+            </a>
+        </div>
+
+        {% if search_query %}
+            <div style="font-style: italic; color: #7f8c8d;">
+                Результати для: "<strong>{{ search_query }}</strong>"
+                <a href="?" style="color: #e74c3c; text-decoration: none; margin-left: 10px;">✖ Скинути</a>
+            </div>
+        {% endif %}
+    </div>
+
     <div class="product-list" style="display: flex; flex-wrap: wrap; gap: 20px;">
         {% for product in products %}
             <div class="product-card" style="border: 1px solid #ddd; padding: 15px; width: 280px; text-align: center; border-radius: 10px; background: #fff; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
@@ -17,7 +48,7 @@
                     {% endif %}
                 </div>
 
-                <h3 style="font-size: 18px; margin: 10px 0;">{{ product.title }}</h3>
+                <h3 style="font-size: 18px; margin: 10px 0; height: 45px; overflow: hidden;">{{ product.title }}</h3>
                 <p style="color: #555;">Бренд: <strong>{{ product.brand.name }}</strong></p>
                 <p style="font-weight: bold; color: #2c3e50; font-size: 20px;">{{ product.price }} грн</p>
 
@@ -25,6 +56,11 @@
                     <a href="{{ product.get_absolute_url }}" style="text-decoration: none; padding: 8px 15px; background: #3498db; color: white; border-radius: 5px; font-size: 14px;">Детальніше</a>
                     <button style="padding: 8px 15px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">Купити</button>
                 </div>
+            </div>
+        {% empty %}
+            <div style="width: 100%; text-align: center; padding: 50px;">
+                <p style="font-size: 18px; color: #7f8c8d;">На жаль, за вашим запитом нічого не знайдено 🎣</p>
+                <a href="{% url 'home_page' %}" style="color: #3498db;">Показати всі товари</a>
             </div>
         {% endfor %}
     </div>
