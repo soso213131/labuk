@@ -1,0 +1,25 @@
+{% extends 'web_app/base.html' %}
+
+{% block title %} Категорія: {{ category.name }} {% endblock %}
+
+{% block content %}
+    <h2>Товари у категорії: "{{ category.name }}"</h2>
+
+    <div class="product-list" style="display: flex; flex-wrap: wrap;">
+        {% for product in products %}
+            <div class="product-card" style="border: 1px solid #ccc; padding: 15px; margin: 10px; width: 250px; text-align: center;">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" style="width: 100%; height: 200px; object-fit: contain;">
+                {% endif %}
+                <h3>{{ product.title }}</h3>
+                <p>Ціна: {{ product.price }} грн</p>
+                <a href="{{ product.get_absolute_url }}" style="text-decoration: none; color: blue; font-weight: bold;">Дивитися товар</a>
+            </div>
+        {% empty %}
+            <p>У цій категорії поки немає товарів.</p>
+        {% endfor %}
+    </div>
+
+    <br>
+    <a href="{% url 'home_page' %}">← На головну</a>
+{% endblock %}
