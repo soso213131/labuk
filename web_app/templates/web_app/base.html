@@ -49,14 +49,33 @@
             {% endfor %}
         </ul>
 
-        <!-- БЛОК ПОШУКУ ТА КОШИКА -->
+        <!-- БЛОК АВТОРИЗАЦІЇ, ПОШУКУ ТА КОШИКА -->
         <div style="display: flex; align-items: center; gap: 20px;">
 
-            <!-- Форма пошуку (вже має бути у тебе) -->
+            <!-- БЛОК АВТОРИЗАЦІЇ -->
+            <div style="display: flex; gap: 15px; align-items: center; border-right: 1px solid #7f8c8d; padding-right: 20px;">
+                {% if user.is_authenticated %}
+                    <span style="color: #f1c40f; font-weight: bold;">Привіт, {{ user.username }}!</span>
+                    <form action="{% url 'users:logout' %}" method="post" style="margin: 0;">
+                        {% csrf_token %}
+                        <button type="submit" style="background: none; border: none; color: #e74c3c; font-weight: bold; cursor: pointer; font-size: 15px; padding: 0;">Вийти</button>
+                    </form>
+                {% else %}
+                    <a href="{% url 'users:login' %}" style="color: white; text-decoration: none; font-weight: bold; font-size: 14px;">Увійти</a>
+                    <a href="{% url 'users:register' %}" style="color: #2c3e50; background: #ecf0f1; text-decoration: none; font-weight: bold; padding: 6px 12px; border-radius: 5px; font-size: 14px;">Реєстрація</a>
+                {% endif %}
+            </div>
+
+            <!-- Форма пошуку -->
             <form action="{% url 'home_page' %}" method="get" style="display: flex; gap: 5px;">
                 <input type="text" name="search" placeholder="Шукати..." value="{{ request.GET.search }}" style="padding: 5px 10px; border-radius: 5px; border: none;">
                 <button type="submit" style="padding: 5px 10px; background: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">🔍</button>
             </form>
+
+            <!-- КНОПКА ЗВОРОТНОГО ДЗВІНКА -->
+            <a href="#" onclick="document.getElementById('callbackModal').style.display='flex'; return false;" style="background: #27ae60; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 8px;">
+                📞 Дзвінок
+            </a>
 
             <!-- КНОПКА КОШИКА -->
             <a href="{% url 'cart:cart_detail' %}" style="background: #e67e22; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-weight: bold; display: flex; align-items: center; gap: 8px;">
@@ -77,9 +96,63 @@
     {% endblock %}
 </main>
 
-<footer>
-    <p>&copy; 2026 Магазин «Рибалка». Найкраще спорядження для вашого улову!</p>
+<!-- ФУТЕР -->
+<footer style="background: #2c3e50; color: #ecf0f1; padding: 40px 20px; margin-top: 50px; font-family: sans-serif;">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+
+        <!-- Контакти -->
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #3498db; margin-bottom: 15px;">📍 Наші контакти</h3>
+            <p><strong>Адреса:</strong> м. Луцьк, вул. Конякіна, 13</p>
+            <p><strong>Телефон:</strong> <a href="tel:+380990000000" style="color: #ecf0f1; text-decoration: none;">+38 (099) 000-00-00</a></p>
+            <p><strong>Email:</strong> info@rybalka.lutsk.ua</p>
+        </div>
+
+        <!-- Корисні посилання -->
+        <div style="flex: 1; min-width: 250px;">
+            <h3 style="color: #3498db; margin-bottom: 15px;">🔗 Інформація</h3>
+            <ul style="list-style: none; padding: 0; line-height: 1.8;">
+                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">Про магазин</a></li>
+                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">Доставка та оплата</a></li>
+                <li><a href="#" style="color: #bdc3c7; text-decoration: none;">Політика конфіденційності</a></li>
+            </ul>
+        </div>
+
+        <!-- Цікавий факт -->
+        <div style="flex: 1; min-width: 250px; background: #34495e; padding: 15px; border-radius: 8px; border-left: 4px solid #e67e22;">
+            <h3 style="color: #e67e22; margin-top: 0;">🐟 Чи знаєте ви?</h3>
+            <p style="font-size: 14px; font-style: italic; color: #bdc3c7;">
+                Найбільший спійманий короп у світі важив понад 51 кг! Його спіймали в Угорщині у 2018 році. Готуйте міцні снасті!
+            </p>
+        </div>
+
+    </div>
+
+    <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #7f8c8d; font-size: 14px; color: #95a5a6;">
+        &copy; {% now "Y" %} Магазин «Рибалка». Всі права захищені.
+    </div>
 </footer>
+
+<!-- МОДАЛЬНЕ ВІКНО ЗВОРОТНОГО ДЗВІНКА -->
+<div id="callbackModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 1000; justify-content: center; align-items: center; backdrop-filter: blur(3px);">
+    <div style="background: white; padding: 30px; border-radius: 15px; width: 320px; text-align: center; position: relative; box-shadow: 0 10px 30px rgba(0,0,0,0.2);">
+
+        <!-- Хрестик для закриття -->
+        <span onclick="document.getElementById('callbackModal').style.display='none'" style="position: absolute; top: 10px; right: 15px; cursor: pointer; font-size: 24px; color: #7f8c8d;">&times;</span>
+
+        <h3 style="margin-top: 0; color: #2c3e50; font-size: 22px;">Замовити дзвінок 📞</h3>
+        <p style="font-size: 14px; color: #7f8c8d; margin-bottom: 20px;">Залиште свій номер, і ми зателефонуємо вам для консультації!</p>
+
+        <!-- Форма відправки номера -->
+        <form action="{% url 'orders:request_callback' %}" method="post" style="display: flex; flex-direction: column; gap: 15px;">
+            {% csrf_token %}
+            <input type="text" name="phone" placeholder="+380..." required style="padding: 12px; border: 2px solid #ecf0f1; border-radius: 8px; font-size: 16px; text-align: center; outline: none;">
+            <button type="submit" style="padding: 12px; background: #e67e22; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; transition: 0.3s;">
+                Чекаю дзвінка!
+            </button>
+        </form>
+    </div>
+</div>
 
 </body>
 </html>

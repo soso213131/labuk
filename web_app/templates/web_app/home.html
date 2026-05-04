@@ -54,7 +54,14 @@
 
                 <div style="margin-top: 15px; display: flex; gap: 10px; justify-content: center;">
                     <a href="{{ product.get_absolute_url }}" style="text-decoration: none; padding: 8px 15px; background: #3498db; color: white; border-radius: 5px; font-size: 14px;">Детальніше</a>
-                    <button style="padding: 8px 15px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">Купити</button>
+
+                    <!-- Форма для швидкого додавання 1 шт. у кошик -->
+                    <form action="{% url 'cart:cart_add' product.id %}" method="post" style="margin: 0;">
+                        {% csrf_token %}
+                        <input type="hidden" name="quantity" value="1">
+                        <input type="hidden" name="update" value="False">
+                        <button type="submit" style="padding: 8px 15px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">Купити</button>
+                    </form>
                 </div>
             </div>
         {% empty %}

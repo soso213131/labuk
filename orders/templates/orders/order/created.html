@@ -1,0 +1,12 @@
+{% extends 'web_app/base.html' %}
+{% block title %}Дякуємо!{% endblock %}
+
+{% block content %}
+    <div style="text-align: center; margin-top: 50px; padding: 50px; background: #e8f8f5; border-radius: 15px;">
+        <h1 style="color: #27ae60; font-size: 40px;">Дякуємо за замовлення! 🎉</h1>
+        <p style="font-size: 20px;">Ваше замовлення <strong>№{{ order.id }}</strong> успішно оформлено.</p>
+        <p style="font-size: 18px; color: #555;">Ми зателефонуємо на номер <strong>{{ order.phone }}</strong> для підтвердження.</p>
+        <br>
+        <a href="{% url 'home_page' %}" style="display: inline-block; margin-top: 20px; padding: 12px 25px; background: #3498db; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Повернутися до магазину</a>
+    </div>
+{% endblock %}

@@ -19,7 +19,19 @@
                 {% with product=item.product %}
                     <tr>
                         <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ product.title }}</td>
-                        <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ item.quantity }} шт.</td>
+
+                        <!-- Оновлена колонка для зміни кількості -->
+                        <td style="padding: 10px; border-bottom: 1px solid #eee;">
+                            <form action="{% url 'cart:cart_add' product.id %}" method="post" style="display: flex; align-items: center; gap: 5px; margin: 0;">
+                                {% csrf_token %}
+                                {{ item.update_quantity_form.quantity }}
+                                {{ item.update_quantity_form.update }}
+                                <button type="submit" style="background: #f39c12; color: white; border: none; border-radius: 5px; padding: 8px; cursor: pointer;" title="Оновити кількість">
+                                    🔄
+                                </button>
+                            </form>
+                        </td>
+
                         <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ item.price }} грн</td>
                         <td style="padding: 10px; border-bottom: 1px solid #eee;">{{ item.total_price }} грн</td>
                         <td style="padding: 10px; border-bottom: 1px solid #eee;">
@@ -37,6 +49,8 @@
 
     <div style="margin-top: 30px; display: flex; gap: 20px;">
         <a href="{% url 'home_page' %}" style="padding: 10px 20px; background: #95a5a6; color: white; text-decoration: none; border-radius: 5px;">Продовжити покупки</a>
-        <a href="#" style="padding: 10px 20px; background: #27ae60; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Оформити замовлення 🚀</a>
+
+        <!-- ВИПРАВЛЕНА КНОПКА ТУТ -->
+        <a href="{% url 'orders:order_create' %}" style="padding: 10px 20px; background: #27ae60; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;">Оформити замовлення 🚀</a>
     </div>
 {% endblock %}

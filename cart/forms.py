@@ -1,13 +1,11 @@
 from django import forms
 
-PRODUCT_QUANTITY_CHOICES = [(i, str(i)) for i in range(1, 21)]
-
 class CartAddProductForm(forms.Form):
-    # Поле для вибору кількості (від 1 до 20)
+    # Поле quantity має бути ТАКЕ Ж як у views.py
     quantity = forms.TypedChoiceField(
-        choices=PRODUCT_QUANTITY_CHOICES,
+        choices=[(i, str(i)) for i in range(1, 21)],
         coerce=int,
         label='Кількість'
     )
-    # Поле, яке вказує, чи треба замінити кількість на нову, чи додати до існуючої
-    update = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)
+    # Поле override має бути ТАКЕ Ж як у views.py
+    override = forms.BooleanField(required=False, initial=False, widget=forms.HiddenInput)

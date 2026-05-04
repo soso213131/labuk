@@ -1,0 +1,33 @@
+{% extends 'web_app/base.html' %}
+{% block title %}Оформлення замовлення{% endblock %}
+
+{% block content %}
+    <h1>Оформлення замовлення</h1>
+    <div style="display: flex; gap: 40px; margin-top: 20px; flex-wrap: wrap;">
+        
+        <!-- Форма -->
+        <div style="flex: 1; min-width: 300px;">
+            <form method="post" style="display: flex; flex-direction: column; gap: 15px; background: #f9f9f9; padding: 20px; border-radius: 10px;">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" style="background: #27ae60; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer;">
+                    Підтвердити замовлення ✅
+                </button>
+            </form>
+        </div>
+
+        <!-- Підсумок кошика -->
+        <div style="flex: 1; min-width: 300px; background: #2c3e50; color: white; padding: 20px; border-radius: 10px;">
+            <h3 style="margin-top: 0; color: #f1c40f;">Ваше замовлення:</h3>
+            <ul style="list-style: none; padding: 0;">
+                {% for item in cart %}
+                    <li style="border-bottom: 1px solid #34495e; padding: 10px 0; display: flex; justify-content: space-between;">
+                        <span>{{ item.quantity }}x {{ item.product.title }}</span>
+                        <span>{{ item.total_price }} грн</span>
+                    </li>
+                {% endfor %}
+            </ul>
+            <h2 style="text-align: right; margin-top: 20px;">Разом: {{ cart.get_total_price }} грн</h2>
+        </div>
+    </div>
+{% endblock %}

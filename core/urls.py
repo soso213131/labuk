@@ -6,7 +6,9 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cart/', include('cart.urls', namespace='cart')), # Додай цей рядок
+    path('orders/', include('orders.urls', namespace='orders')), # ДОДАЙ ЦЕЙ РЯДОК
     path('', include('web_app.urls')),
+    path('users/', include('users.urls', namespace='users')), # ДОДАЙ ЦЕЙ РЯДОК
 ]
 
 # Без цього блоку картинки НЕ будуть відображатися!

@@ -1,0 +1,39 @@
+{% extends 'web_app/base.html' %}
+
+{% block title %}Головна - Магазин Рибалка{% endblock %}
+
+{% block content %}
+    <h2 style="text-align: center; color: #2c3e50; margin-bottom: 30px;">
+        {% if category %} {{ category.name }} {% else %} Усі товари 🎣 {% endif %}
+    </h2>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+        {% for product in products %}
+            <div class="product-card">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.title }}" style="max-width: 100%; height: auto; border-radius: 8px;">
+                {% else %}
+                    <div style="height: 200px; background: #eee; display: flex; align-items: center; justify-content: center; border-radius: 8px;">Немає фото</div>
+                {% endif %}
+
+                <h3><a href="{{ product.get_absolute_url }}" style="text-decoration: none; color: #2c3e50;">{{ product.title }}</a></h3>
+                <p style="font-weight: bold; color: #e67e22; font-size: 18px;">{{ product.price }} грн</p>
+                <p style="color: #f1c40f;">⭐ {{ product.get_average_rating }} / 5</p>
+
+                <form action="{% url 'cart:cart_add' product.id %}" method="post">
+                    {% csrf_token %}
+
+                    <!-- ДОДАНО ПРИХОВАНІ ПОЛЯ: вказуємо Django додати 1 штуку -->
+                    <input type="hidden" name="quantity" value="1">
+                    <input type="hidden" name="override" value="False">
+
+                    <button type="submit" style="background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; font-weight: bold; transition: 0.3s;">
+                        🛒 В кошик
+                    </button>
+                </form>
+            </div>
+        {% empty %}
+            <p style="text-align: center; grid-column: 1 / -1;">Товарів поки немає. Заходьте пізніше!</p>
+        {% endfor %}
+    </div>
+{% endblock %}
